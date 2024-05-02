@@ -2,11 +2,11 @@
 include __DIR__ . "/Controller/newTable.php";
 include __DIR__ . "/Models/hotels.php";
 $parking = '';
+
 if (isset($_GET['parking']) && $_GET['parking'] != 'all') {
     $parking = $_GET['parking'];
     $hotels_filtered = array_filter($hotels, fn($hotel) => (string)$hotel['parking'] == $parking);
-    } elseif ($_GET['parking'] == 'all') {
-        $parking = $_GET['parking'];
+    } elseif ( isset($_GET['parking']) && $_GET['parking'] == 'all' || !isset($_GET['parking'])) {
         $hotels_filtered = $hotels;
     };
     
@@ -14,6 +14,7 @@ if (isset($_GET['parking']) && $_GET['parking'] != 'all') {
 var_dump($hotels_filtered);
 var_dump($parking);
 var_dump((string)$hotels[2]['parking']);
+/* var_dump($_GET['parking']); */
 
     ?>
 
@@ -34,6 +35,7 @@ var_dump((string)$hotels[2]['parking']);
         <input type="radio" name="parking" value="">
         <label for="all">all</label>
         <input type="radio" name="parking" value="all">
+        <input type="number" name="">
         <input type="submit" value="send">
     </form>
     <table class="table">
