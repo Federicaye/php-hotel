@@ -2,22 +2,18 @@
 include __DIR__ . "/Controller/newTable.php";
 include __DIR__ . "/Models/hotels.php";
 $parking = '';
-//se è stato selezionata opzione parcheggio e se non è stata selezionata all e se è stato selezionato il voto
+$hotels_filtered=$hotels;
+
 if (isset($_GET['parking']) && $_GET['parking'] != 'all' && isset($_GET['vote'])) {
     $vote = $_GET['vote'];
     $parking = $_GET['parking'];
     $hotels_filtered_parking = array_filter($hotels, fn($hotel) => (string) $hotel['parking'] == $parking);
     $hotels_filtered = array_filter($hotels_filtered_parking, fn($hotel) => (string) $hotel['vote'] >= $vote);
-    //se è stato selezionato opzione parcheggio e se non è stato selezinato all e se è stato selezionato tutti i voti
-} /* elseif (isset($_GET['parking']) && $_GET['parking'] != 'all' && isset($_GET['vote'])) {
-    $parking = $_GET['parking'];
-    $hotels_filtered =  array_filter($hotels, fn($hotel) => (string) $hotel['parking'] == $parking)}; */
-//se è stato selezionato opzione parcheggio e se è stato selezionato all e se è stato selezionato tutti i voti
- elseif (isset($_GET['parking']) && $_GET['parking'] == 'all'  && isset($_GET['vote'])) {
-    $hotels_filtered= $hotels;
-    $hotels_filtered = array_filter($hotels, fn($hotel) => (string) $hotel['vote'] >= $vote);
-} elseif (isset($_GET['parking']) && $_GET['parking'] == 'all' || !isset($_GET['parking'])) {
-    $hotels_filtered= $hotels;}
+    
+} 
+elseif (isset($_GET['parking']) && $_GET['parking'] == 'all' && isset($_GET['vote']) || !isset($_GET['parking']) && isset($_GET['vote'])) {
+    $vote = $_GET['vote'];
+    $hotels_filtered = array_filter($hotels, fn($hotel) => (string) $hotel['vote'] >= $vote);}
 
 
 if (isset($_GET['vote'])) {
