@@ -8,12 +8,12 @@ if (isset($_GET['parking']) && $_GET['parking'] != 'all' && isset($_GET['vote'])
     $vote = $_GET['vote'];
     $parking = $_GET['parking'];
     $hotels_filtered_parking = array_filter($hotels, fn($hotel) => (string) $hotel['parking'] == $parking);
-    $hotels_filtered = array_filter($hotels_filtered_parking, fn($hotel) => (string) $hotel['vote'] >= $vote);
+    $hotels_filtered = array_filter($hotels_filtered_parking, fn($hotel) =>  $hotel['vote'] >= $vote);
     
 } 
 elseif (isset($_GET['parking']) && $_GET['parking'] == 'all' && isset($_GET['vote']) || !isset($_GET['parking']) && isset($_GET['vote'])) {
     $vote = $_GET['vote'];
-    $hotels_filtered = array_filter($hotels, fn($hotel) => (string) $hotel['vote'] >= $vote);}
+    $hotels_filtered = array_filter($hotels, fn($hotel) =>  $hotel['vote'] >= $vote);}
 
 
 if (isset($_GET['vote'])) {
