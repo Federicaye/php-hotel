@@ -3,19 +3,21 @@ include __DIR__ . "/Controller/newTable.php";
 include __DIR__ . "/Models/hotels.php";
 $parking = '';
 //se è stato selezionata opzione parcheggio e se non è stata selezionata all e se è stato selezionato il voto
-if (isset($_GET['parking']) && $_GET['parking'] != 'all' && isset($_GET['vote']) && $_GET['vote'] !== 'all') {
+if (isset($_GET['parking']) && $_GET['parking'] != 'all' && isset($_GET['vote'])) {
     $vote = $_GET['vote'];
     $parking = $_GET['parking'];
     $hotels_filtered_parking = array_filter($hotels, fn($hotel) => (string) $hotel['parking'] == $parking);
-    $hotels_filtered = array_filter($hotels_filtered_parking, fn($hotel) => $vote == $hotel['vote']);
-    //se è stato selezionato opzione parcheggio e se non è stato selezinato all
+    $hotels_filtered = array_filter($hotels_filtered_parking, fn($hotel) => (string) $hotel['vote'] >= $vote);
+    //se è stato selezionato opzione parcheggio e se non è stato selezinato all e se è stato selezionato tutti i voti
 } elseif (isset($_GET['parking']) && $_GET['parking'] != 'all' && isset($_GET['vote']) && $_GET['vote'] == 'all') {
     $parking = $_GET['parking'];
     $hotels_filtered =  array_filter($hotels, fn($hotel) => (string) $hotel['parking'] == $parking);
+//se è stato selezionato opzione parcheggio e se è stato selezionato all e se è stato selezionato tutti i voti
+} elseif (isset($_GET['parking']) && $_GET['parking'] == 'all'  && isset($_GET['vote']) && $_GET['vote'] == 'all' ) {
+    $hotels_filtered= $hotels;
 
 } elseif (isset($_GET['parking']) && $_GET['parking'] == 'all' || !isset($_GET['parking'])) {
-    $hotels_filtered= $hotels;
-}
+    $hotels_filtered= $hotels;}
 
 
 if (isset($_GET['vote'])) {
@@ -24,7 +26,7 @@ if (isset($_GET['vote'])) {
 ;
 /* var_dump($hotels); */
 /* var_dump($hotels_filtered); */
-/* var_dump($parking); */
+ var_dump($parking); 
 /* var_dump($vote); */
 /* var_dump((string)$hotels[2]['parking']); */
 /* var_dump($_GET['parking']); */
@@ -38,6 +40,7 @@ if (isset($_GET['vote'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link href='https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css' rel='stylesheet' integrity='sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH' crossorigin='anonymous'>
 </head>
 
 <body>
@@ -49,7 +52,7 @@ if (isset($_GET['vote'])) {
         <label for="all">all</label>
         <input type="radio" name="parking" value="all">
         <select name="vote" id="">
-            <option value="all">all</option>
+            <option value="0">all</option>
             <option value="1">1</option>
             <option value="2">2</option>
             <option value="3">3</option>
@@ -58,7 +61,7 @@ if (isset($_GET['vote'])) {
         </select>
         <input type="submit" value="send">
     </form>
-    <table class="table">
+    <table class="table table-bordered">
         <thead>
             <tr>
                 <th scope="col">name</th>
