@@ -6,14 +6,19 @@ $parking = '';
 if (isset($_GET['parking']) && $_GET['parking'] != 'all') {
     $parking = $_GET['parking'];
     $hotels_filtered = array_filter($hotels, fn($hotel) => (string)$hotel['parking'] == $parking);
+    
     } elseif ( isset($_GET['parking']) && $_GET['parking'] == 'all' || !isset($_GET['parking'])) {
         $hotels_filtered = $hotels;
     };
     
+if (isset($_GET['vote'])){
+    $vote = $_GET['vote'];
+};
 /* var_dump($hotels); */
-var_dump($hotels_filtered);
-var_dump($parking);
-var_dump((string)$hotels[2]['parking']);
+/* var_dump($hotels_filtered); */
+/* var_dump($parking); */
+var_dump($vote);
+/* var_dump((string)$hotels[2]['parking']); */
 /* var_dump($_GET['parking']); */
 
     ?>
@@ -35,7 +40,7 @@ var_dump((string)$hotels[2]['parking']);
         <input type="radio" name="parking" value="">
         <label for="all">all</label>
         <input type="radio" name="parking" value="all">
-        <input type="number" name="">
+        <input type="number" name="vote">
         <input type="submit" value="send">
     </form>
     <table class="table">
