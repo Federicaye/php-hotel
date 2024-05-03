@@ -1,4 +1,9 @@
 <?php
+session_start();
+if(!isset($_SESSION['userId'])) {
+    session_destroy();
+    header('Location : login.php');
+}
 include __DIR__ . "/Controller/newTable.php";
 include __DIR__ . "/Models/hotels.php";
 $parking = '';
