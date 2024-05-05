@@ -45,6 +45,8 @@ if (isset($_GET['vote'])) {
 </head>
 
 <body>
+    <div class="container">
+     <div class="col-1 ms-auto"><a href="logout.php" class="btn btn-danger">logout</a></div>
     <form action="index.php" method="GET">
         <label for="1">parking yes</label>
         <input type="radio" name="parking" value="1">
@@ -77,6 +79,7 @@ if (isset($_GET['vote'])) {
 
         </tbody>
     </table>
+    </div>
 </body>
 
 </html>
